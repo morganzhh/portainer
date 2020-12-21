@@ -10,7 +10,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	httperror "github.com/portainer/libhttp/error"
 	"github.com/portainer/libhttp/request"
-	"github.com/portainer/portainer/api"
+	portainer "github.com/portainer/portainer/api"
 	"github.com/portainer/portainer/api/filesystem"
 	"github.com/portainer/portainer/api/http/security"
 )
@@ -334,15 +334,12 @@ func (handler *Handler) createSwarmDeployConfig(r *http.Request, stack *portaine
 }
 
 func (handler *Handler) deploySwarmStack(config *swarmStackDeploymentConfig) error {
-	settings, err := handler.DataStore.Settings().Settings()
-	if err != nil {
-		return err
-	}
-
 	isAdminOrEndpointAdmin, err := handler.userIsAdminOrEndpointAdmin(config.user, config.endpoint.ID)
 	if err != nil {
 		return err
 	}
+
+	settings := &config.endpoint.SecuritySettings
 
 	if !settings.AllowBindMountsForRegularUsers && !isAdminOrEndpointAdmin {
 		composeFilePath := path.Join(config.stack.ProjectPath, config.stack.EntryPoint)

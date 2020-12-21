@@ -11,7 +11,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	httperror "github.com/portainer/libhttp/error"
 	"github.com/portainer/libhttp/request"
-	"github.com/portainer/portainer/api"
+	portainer "github.com/portainer/portainer/api"
 	"github.com/portainer/portainer/api/filesystem"
 	"github.com/portainer/portainer/api/http/security"
 )
@@ -329,21 +329,18 @@ func (handler *Handler) createComposeDeployConfig(r *http.Request, stack *portai
 // clean it. Hence the use of the mutex.
 // We should contribute to libcompose to support authentication without using the config.json file.
 func (handler *Handler) deployComposeStack(config *composeStackDeploymentConfig) error {
-	settings, err := handler.DataStore.Settings().Settings()
-	if err != nil {
-		return err
-	}
-
 	isAdminOrEndpointAdmin, err := handler.userIsAdminOrEndpointAdmin(config.user, config.endpoint.ID)
 	if err != nil {
 		return err
 	}
 
-	if (!settings.AllowBindMountsForRegularUsers ||
-		!settings.AllowPrivilegedModeForRegularUsers ||
-		!settings.AllowHostNamespaceForRegularUsers ||
-		!settings.AllowDeviceMappingForRegularUsers ||
-		!settings.AllowContainerCapabilitiesForRegularUsers) &&
+	securitySettings := &config.endpoint.SecuritySettings
+
+	if (!securitySettings.AllowBindMountsForRegularUsers ||
+		!securitySettings.AllowPrivilegedModeForRegularUsers ||
+		!securitySettings.AllowHostNamespaceForRegularUsers ||
+		!securitySettings.AllowDeviceMappingForRegularUsers ||
+		!securitySettings.AllowContainerCapabilitiesForRegularUsers) &&
 		!isAdminOrEndpointAdmin {
 
 		composeFilePath := path.Join(config.stack.ProjectPath, config.stack.EntryPoint)
@@ -353,7 +350,7 @@ func (handler *Handler) deployComposeStack(config *composeStackDeploymentConfig)
 			return err
 		}
 
-		err = handler.isValidStackFile(stackContent, settings)
+		err = handler.isValidStackFile(stackContent, securitySettings)
 		if err != nil {
 			return err
 		}
