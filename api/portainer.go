@@ -208,6 +208,7 @@ type (
 		EdgeKey             string              `json:"EdgeKey"`
 		EdgeCheckinInterval int                 `json:"EdgeCheckinInterval"`
 		Kubernetes          KubernetesData      `json:"Kubernetes"`
+		SecuritySettings    EndpointSecuritySettings
 
 		// Deprecated fields
 		// Deprecated in DBVersion == 4
@@ -278,6 +279,18 @@ type (
 	EndpointRelation struct {
 		EndpointID EndpointID
 		EdgeStacks map[EdgeStackID]bool
+	}
+
+	// EndpointSecuritySettings represents settings for an endpoint
+	EndpointSecuritySettings struct {
+		AllowBindMountsForRegularUsers            bool `json:"allowBindMountsForRegularUsers"`
+		AllowPrivilegedModeForRegularUsers        bool `json:"allowPrivilegedModeForRegularUsers"`
+		AllowVolumeBrowserForRegularUsers         bool `json:"allowVolumeBrowserForRegularUsers"`
+		AllowHostNamespaceForRegularUsers         bool `json:"allowHostNamespaceForRegularUsers"`
+		AllowDeviceMappingForRegularUsers         bool `json:"allowDeviceMappingForRegularUsers"`
+		AllowStackManagementForRegularUsers       bool `json:"allowStackManagementForRegularUsers"`
+		AllowContainerCapabilitiesForRegularUsers bool `json:"allowContainerCapabilitiesForRegularUsers"`
+		EnableHostManagementFeatures              bool `json:"enableHostManagementFeatures"`
 	}
 
 	// Extension represents a deprecated Portainer extension
@@ -515,29 +528,31 @@ type (
 
 	// Settings represents the application settings
 	Settings struct {
-		LogoURL                                   string               `json:"LogoURL"`
-		BlackListedLabels                         []Pair               `json:"BlackListedLabels"`
-		AuthenticationMethod                      AuthenticationMethod `json:"AuthenticationMethod"`
-		LDAPSettings                              LDAPSettings         `json:"LDAPSettings"`
-		OAuthSettings                             OAuthSettings        `json:"OAuthSettings"`
-		AllowBindMountsForRegularUsers            bool                 `json:"AllowBindMountsForRegularUsers"`
-		AllowPrivilegedModeForRegularUsers        bool                 `json:"AllowPrivilegedModeForRegularUsers"`
-		AllowVolumeBrowserForRegularUsers         bool                 `json:"AllowVolumeBrowserForRegularUsers"`
-		AllowHostNamespaceForRegularUsers         bool                 `json:"AllowHostNamespaceForRegularUsers"`
-		AllowDeviceMappingForRegularUsers         bool                 `json:"AllowDeviceMappingForRegularUsers"`
-		AllowStackManagementForRegularUsers       bool                 `json:"AllowStackManagementForRegularUsers"`
-		AllowContainerCapabilitiesForRegularUsers bool                 `json:"AllowContainerCapabilitiesForRegularUsers"`
-		SnapshotInterval                          string               `json:"SnapshotInterval"`
-		TemplatesURL                              string               `json:"TemplatesURL"`
-		EnableHostManagementFeatures              bool                 `json:"EnableHostManagementFeatures"`
-		EdgeAgentCheckinInterval                  int                  `json:"EdgeAgentCheckinInterval"`
-		EnableEdgeComputeFeatures                 bool                 `json:"EnableEdgeComputeFeatures"`
-		UserSessionTimeout                        string               `json:"UserSessionTimeout"`
-		EnableTelemetry                           bool                 `json:"EnableTelemetry"`
+		LogoURL                   string               `json:"LogoURL"`
+		BlackListedLabels         []Pair               `json:"BlackListedLabels"`
+		AuthenticationMethod      AuthenticationMethod `json:"AuthenticationMethod"`
+		LDAPSettings              LDAPSettings         `json:"LDAPSettings"`
+		OAuthSettings             OAuthSettings        `json:"OAuthSettings"`
+		SnapshotInterval          string               `json:"SnapshotInterval"`
+		TemplatesURL              string               `json:"TemplatesURL"`
+		EdgeAgentCheckinInterval  int                  `json:"EdgeAgentCheckinInterval"`
+		EnableEdgeComputeFeatures bool                 `json:"EnableEdgeComputeFeatures"`
+		UserSessionTimeout        string               `json:"UserSessionTimeout"`
+		EnableTelemetry           bool                 `json:"EnableTelemetry"`
 
 		// Deprecated fields
 		DisplayDonationHeader       bool
 		DisplayExternalContributors bool
+
+		// Deprecated fields v26
+		EnableHostManagementFeatures              bool `json:"EnableHostManagementFeatures"`
+		AllowVolumeBrowserForRegularUsers         bool `json:"AllowVolumeBrowserForRegularUsers"`
+		AllowBindMountsForRegularUsers            bool `json:"AllowBindMountsForRegularUsers"`
+		AllowPrivilegedModeForRegularUsers        bool `json:"AllowPrivilegedModeForRegularUsers"`
+		AllowHostNamespaceForRegularUsers         bool `json:"AllowHostNamespaceForRegularUsers"`
+		AllowStackManagementForRegularUsers       bool `json:"AllowStackManagementForRegularUsers"`
+		AllowDeviceMappingForRegularUsers         bool `json:"AllowDeviceMappingForRegularUsers"`
+		AllowContainerCapabilitiesForRegularUsers bool `json:"AllowContainerCapabilitiesForRegularUsers"`
 	}
 
 	// SnapshotJob represents a scheduled job that can create endpoint snapshots
@@ -1121,7 +1136,7 @@ const (
 	// APIVersion is the version number of the Portainer API
 	APIVersion = "2.0.0"
 	// DBVersion is the version number of the Portainer database
-	DBVersion = 25
+	DBVersion = 26
 	// AssetsServerURL represents the URL of the Portainer asset server
 	AssetsServerURL = "https://portainer-io-assets.sfo2.digitaloceanspaces.com"
 	// MessageOfTheDayURL represents the URL where Portainer MOTD message can be retrieved
