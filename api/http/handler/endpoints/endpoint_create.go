@@ -14,7 +14,7 @@ import (
 	httperror "github.com/portainer/libhttp/error"
 	"github.com/portainer/libhttp/request"
 	"github.com/portainer/libhttp/response"
-	"github.com/portainer/portainer/api"
+	portainer "github.com/portainer/portainer/api"
 	"github.com/portainer/portainer/api/crypto"
 	"github.com/portainer/portainer/api/http/client"
 	"github.com/portainer/portainer/api/internal/edge"
@@ -147,7 +147,16 @@ func (payload *endpointCreatePayload) Validate(r *http.Request) error {
 	return nil
 }
 
-// POST request on /api/endpoints
+// Create endpoint
+// @Summary Creates an endpoint
+// @Description
+// @Tags Endpoints
+// @Accept json
+// @Produce json
+// @Param body body endpointCreatePayload true "endpoint data"
+// @Success 200 {object} portainer.Endpoint "Endpoint"
+// @Failure 400,500
+// @Router /endpoints [post]
 func (handler *Handler) endpointCreate(w http.ResponseWriter, r *http.Request) *httperror.HandlerError {
 	payload := &endpointCreatePayload{}
 	err := payload.Validate(r)
