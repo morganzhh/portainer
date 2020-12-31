@@ -1,0 +1,74 @@
+module github.com/portainer/agent
+
+go 1.15
+
+require (
+	github.com/Microsoft/go-winio v0.4.11
+	github.com/armon/go-metrics v0.3.5
+	github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f
+	github.com/davecgh/go-spew v1.1.1
+	github.com/docker/distribution v2.6.0-rc.1.0.20180327202408-83389a148052+incompatible
+	github.com/docker/docker v0.0.0-20180816081446-320063a2ad06
+	github.com/docker/engine v17.12.0-ce-rc1.0.20180816081446-320063a2ad06+incompatible
+	github.com/docker/go-connections v0.4.0
+	github.com/docker/go-units v0.4.0
+	github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c
+	github.com/fsnotify/fsnotify v1.4.9
+	github.com/go-logr/logr v0.3.0
+	github.com/gogo/protobuf v1.3.1
+	github.com/golang/protobuf v1.4.3
+	github.com/google/btree v1.0.0
+	github.com/google/gofuzz v1.2.0
+	github.com/googleapis/gnostic v0.4.0
+	github.com/gorilla/context v1.1.1
+	github.com/gorilla/mux v1.6.2
+	github.com/gorilla/websocket v1.4.0
+	github.com/hashicorp/errwrap v1.1.0
+	github.com/hashicorp/go-immutable-radix v1.3.0
+	github.com/hashicorp/go-msgpack v1.1.5
+	github.com/hashicorp/go-multierror v1.1.0
+	github.com/hashicorp/go-sockaddr v1.0.2
+	github.com/hashicorp/golang-lru v0.5.4
+	github.com/hashicorp/logutils v1.0.0
+	github.com/hashicorp/memberlist v0.2.2
+	github.com/hashicorp/serf v0.8.3
+	github.com/jaypipes/ghw v0.0.0-20181115172816-cebc09458380
+	github.com/jaypipes/pcidb v0.0.0-20181115143611-141a53e65d4a
+	github.com/jpillora/backoff v0.0.0-20180909062703-3050d21c67d7
+	github.com/jpillora/chisel v0.0.0-20190128092258-ee6601a6bbde
+	github.com/jpillora/sizestr v1.0.0
+	github.com/json-iterator/go v1.1.10
+	github.com/koding/websocketproxy v0.0.0-20181220232114-7ed82d81a28c
+	github.com/miekg/dns v1.1.35
+	github.com/mitchellh/go-homedir v1.1.0
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+	github.com/modern-go/reflect2 v1.0.1
+	github.com/opencontainers/go-digest v1.0.0
+	github.com/opencontainers/image-spec v1.0.1
+	github.com/petar/GoLLRB v0.0.0-20190514000832-33fb24c13b99
+	github.com/pkg/errors v0.9.1
+	github.com/portainer/libcrypto v0.0.0-20190723020511-2cfe5519d14f
+	github.com/portainer/libhttp v0.0.0-20190806161840-cde6e97fcd52
+	github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529
+	golang.org/x/crypto v0.0.0-20201217014255-9d1352758620
+	golang.org/x/mod v0.4.0
+	golang.org/x/net v0.0.0-20201216054612-986b41b23924
+	golang.org/x/oauth2 v0.0.0-20201208152858-08078c50e5b5
+	golang.org/x/sys v0.0.0-20201214210602-f9fddec55a1e
+	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf
+	golang.org/x/text v0.3.4
+	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324
+	golang.org/x/tools v0.0.0-20201218024724-ae774e9781d2
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
+	google.golang.org/appengine v1.6.7
+	google.golang.org/protobuf v1.25.0
+	gopkg.in/inf.v0 v0.9.1
+	gopkg.in/yaml.v2 v2.4.0
+	k8s.io/api v0.17.2
+	k8s.io/apimachinery v0.17.2
+	k8s.io/client-go v0.17.2
+	k8s.io/utils v0.0.0-20201110183641-67b214c5f920
+	sigs.k8s.io/yaml v1.2.0
+)
+
+replace github.com/docker/docker v0.0.0-20180816081446-320063a2ad06 => github.com/docker/engine v17.12.0-ce-rc1.0.20180816081446-320063a2ad06+incompatible

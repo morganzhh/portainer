@@ -168,6 +168,20 @@ func updateSettingsFromFlags(dataStore portainer.DataStore, flags *portainer.CLI
 	settings.EnableEdgeComputeFeatures = *flags.EnableEdgeComputeFeatures
 	settings.EnableTelemetry = true
 
+	if len(*flags.OauthAuthorizationUrl) > 0 {
+		log.Println("Initializing Oauth2 settings for the first time")
+		settings.AuthenticationMethod = portainer.AuthenticationOAuth
+		settings.OAuthSettings.AuthorizationURI = *flags.OauthAuthorizationUrl
+		settings.OAuthSettings.AccessTokenURI = *flags.OauthTokenUrl
+		settings.OAuthSettings.ClientID = *flags.OauthClientId
+		settings.OAuthSettings.ClientSecret = *flags.OauthClientSecret
+		settings.OAuthSettings.OAuthAutoCreateUsers = false
+		settings.OAuthSettings.ResourceURI = *flags.OauthUserUrl
+		settings.OAuthSettings.UserIdentifier = *flags.OauthUserKey
+		settings.OAuthSettings.RedirectURI = *flags.OauthRedirectUrl
+		settings.OAuthSettings.Scopes = ""
+	}
+
 	if *flags.Templates != "" {
 		settings.TemplatesURL = *flags.Templates
 	}

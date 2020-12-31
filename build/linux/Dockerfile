@@ -1,4 +1,6 @@
-FROM portainer/base
+
+FROM alpine:latest
+RUN apk --no-cache --update upgrade && apk --no-cache add ca-certificates
 
 COPY dist /
 

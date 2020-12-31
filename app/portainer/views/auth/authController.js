@@ -237,7 +237,9 @@ class AuthenticationController {
         return;
       }
       this.generateOAuthLoginURI();
-
+      if (settings.OAuthLoginURI) {
+        window.location.href = this.OAuthLoginURI;
+      }
       if (this.$stateParams.logout || this.$stateParams.error) {
         this.logout(this.$stateParams.error);
         return;

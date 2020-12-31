@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/spf13/viper"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -51,6 +52,13 @@ func (*Service) ParseFlags(version string) (*portainer.CLIFlags, error) {
 		Labels:                    pairs(kingpin.Flag("hide-label", "Hide containers with a specific label in the UI").Short('l')),
 		Logo:                      kingpin.Flag("logo", "URL for the logo displayed in the UI").String(),
 		Templates:                 kingpin.Flag("templates", "URL to the templates definitions.").Short('t').String(),
+		OauthAuthorizationUrl:     kingpin.Flag("authorization-url", "Oauth2 authorization url.").String(),
+		OauthClientId:             kingpin.Flag("client-id", "Oauth2 client id.").String(),
+		OauthClientSecret:         kingpin.Flag("client-secret", "Oauth2 client secret.").String(),
+		OauthRedirectUrl:          kingpin.Flag("redirect-url", "Oauth2 redirect url.").String(),
+		OauthTokenUrl:             kingpin.Flag("token-url", "Oauth2 token url.").String(),
+		OauthUserUrl:              kingpin.Flag("user-url", "Oauth2 user detail url.").String(),
+		OauthUserKey:              kingpin.Flag("user-key", "Oauth2 key in user detail.").String(),
 	}
 
 	kingpin.Parse()
@@ -63,7 +71,19 @@ func (*Service) ParseFlags(version string) (*portainer.CLIFlags, error) {
 		*flags.Assets = filepath.Join(filepath.Dir(ex), *flags.Assets)
 	}
 
+	getEnv(flags)
 	return flags, nil
+}
+
+func getEnv(flag *portainer.CLIFlags) {
+	v := viper.New()
+	v.SetEnvPrefix("DOCKER_MANAGER")
+	v.AutomaticEnv()
+
+	password := strings.TrimSpace(v.GetString("ADMIN_PASSWORD"))
+	if len(password) > 0 {
+		flag.AdminPassword = &password
+	}
 }
 
 // ValidateFlags validates the values of the flags.

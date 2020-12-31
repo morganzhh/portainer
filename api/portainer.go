@@ -55,6 +55,13 @@ type (
 		SSLCert                   *string
 		SSLKey                    *string
 		SnapshotInterval          *string
+		OauthClientId             *string
+		OauthClientSecret         *string
+		OauthAuthorizationUrl     *string
+		OauthRedirectUrl          *string
+		OauthTokenUrl             *string
+		OauthUserUrl              *string
+		OauthUserKey              *string
 	}
 
 	// CustomTemplate represents a custom template
